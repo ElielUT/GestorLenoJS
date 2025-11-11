@@ -63,7 +63,7 @@
         </div>
         <table class="table">
           <thead>
-            <tr><th>Nombre</th><th>Correo</th><th>Teléfono</th><th>Editar / Borrar</th></tr>
+            <tr><th>Nombre</th><th>Correo</th><th>Teléfono</th></tr>
           </thead>
           <tbody id="clientsTableBody">
             <% 
@@ -78,9 +78,6 @@
                 </td>
                 <td>
                   <%= cliente.telefono %>
-                </td>
-                <td>
-                  <a href="/editarCliente/<%= cliente._id %>">Editar</a> / <a href="/borrarCliente/<%= cliente._id %>">Borrar</a>
                 </td>
               </tr>
             <%
@@ -99,7 +96,7 @@
         </div>
         <table class="table">
           <thead>
-            <tr><th>Id</th><th>Producto</th><th>Categoría</th><th>Existencia</th><th>Proveedor</th><th>Editar / Borrar</th></tr>
+            <tr><th>Id</th><th>Producto</th><th>Categoría</th><th>Existencia</th><th>Proveedor</th></tr>
           </thead>
           <tbody id="productsTableBody">
             <% 
@@ -120,9 +117,6 @@
                 </td>
                 <td>
                   <%= product.proveedor %>
-                </td>
-                <td>
-                  <a href="/editarProducto/<%= product._id %>">Editar</a> / <a href="/borrarProducto/<%= product._id %>">Borrar</a>
                 </td>
               </tr>
             <%
