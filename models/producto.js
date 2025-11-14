@@ -30,6 +30,12 @@ const productoSchema = new mongoose.Schema({
         required: true,
         trim: true,
         unique: false
+    },
+    imagen:{
+        type:String,
+        required: true,
+        trim: false,
+        unique: true,
     }
 })
 

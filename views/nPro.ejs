@@ -5,7 +5,7 @@
             <h1>Nuevo Producto</h1>
         </header>
         <div class="contenIntSec">
-            <form action="/snp" method="post">
+            <form action="/snp" method="post" enctype="multipart/form-data">
                 <Label for = "producto">
                     Producto:
                 </Label>
@@ -22,6 +22,9 @@
                 <br></br>
                 <label for="proveedor">Proveedor</label>
                 <input type="text" name="proveedor" id="proveedor" placeholder="----------">
+                <br></br>
+                <label for="foto">Foto del producto</label>
+                <input type="file" name="foto" id="foto">
                 <br></br>
                 <input type="submit" name="Enviar" id="" class="btn primary">
             </form>

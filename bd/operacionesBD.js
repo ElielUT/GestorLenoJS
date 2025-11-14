@@ -1,5 +1,12 @@
 import Clientes from "../models/clientes.js"
 import Productos from "../models/producto.js"
+import fs from "fs"
+import path from "path"
+import { fileURLToPath } from "url"
+
+// Obtener la ruta actual del proyecto (necesario en ES Modules)
+const __filename = fileURLToPath(import.meta.url)
+const __dirname = path.dirname(__filename)
 
 //GENERALES
 
@@ -34,8 +41,8 @@ export async function borrarCliente(id) {
 }
 
 //PRODUCTOS
-export async function nuevoProducto({producto, categoria, existencia, precio, proveedor}) {
-    const product = new Productos({producto, categoria, existencia, precio, proveedor})
+export async function nuevoProducto({producto, categoria, existencia, precio, proveedor, imagen}) {
+    const product = new Productos({producto, categoria, existencia, precio, proveedor, imagen})
     const respuestaMongo = await product.save()
     return respuestaMongo
 }
@@ -77,12 +84,30 @@ export async function buscarProducto(id) {
     return producto
 }
 
-export async function editarProducto({id, producto, categoria, existencia, precio, proveedor}) {
+export async function editarProducto({id, producto, categoria, existencia, precio, proveedor, imagen}) {
     const respuestaMongo = await Productos.findByIdAndUpdate(id, {producto, categoria, existencia, precio, proveedor})
     return respuestaMongo
 }
 
 export async function borrarProducto(id) {
-    const respuestaMongo = await Productos(id)
+    // Primero, obtener el producto para saber el nombre de la imagen
+    const producto = await Productos.findById(id)
+    
+    if (producto && producto.imagen) {
+        // Construir la ruta completa de la imagen
+        const rutaImagen = path.join(__dirname, '../public/images', producto.imagen)
+        
+        // Intentar borrar la imagen del sistema de archivos
+        fs.unlink(rutaImagen, (err) => {
+            if (err) {
+                console.log(`Advertencia: No se pudo borrar la imagen ${producto.imagen}:`, err.message)
+            } else {
+                console.log(`Imagen ${producto.imagen} borrada correctamente`)
+            }
+        })
+    }
+    
+    // Ahora borrar el documento de la base de datos
+    const respuestaMongo = await Productos.findByIdAndDelete(id)
     return respuestaMongo
 }

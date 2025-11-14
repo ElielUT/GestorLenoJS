@@ -90,7 +90,7 @@
       <div class="card">
         <table class="table">
           <thead>
-            <tr><th>Id</th><th>Producto</th><th>Categoría</th><th>Existencia</th><th>Proveedor</th></tr>
+            <tr><th>Id</th><th>Foto</th><th>Producto</th><th>Categoría</th><th>Existencia</th><th>Proveedor</th></tr>
           </thead>
           <tbody id="productsTableBody">
             <% 
@@ -99,6 +99,9 @@
               <tr>
                 <td>
                   <%= product._id %>
+                </td>
+                <td>
+                  <img src="images/<%= product.imagen %>" alt="<%= product.producto %>" width="50px">
                 </td>
                 <td>
                   <%= product.producto %>

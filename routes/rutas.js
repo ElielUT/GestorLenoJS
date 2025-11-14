@@ -2,6 +2,7 @@ import {Router} from "express"
 import { cantClientes, cantProductos, enClientes, enProductos, nuevoCliente, nuevoProducto, sumaExistencias, cantProveedores, buscarCliente, buscarProducto, editarCliente, editarProducto, borrarCliente, borrarProducto } from "../bd/operacionesBD.js"
 import session from "express-session"
 import 'dotenv/config'
+import { subirImgagen } from "../middlewares/subirImagen.js"
 
 const router = Router()
 
@@ -54,7 +55,7 @@ router.get("/nCli", (req, res) => {
     }
 })
 
-router.get("/nPro", (req, res) => {
+router.get("/nPro",(req, res) => {
     if(req.session.inicio == 1){
         res.render("nPro")
     }else{
@@ -76,15 +77,17 @@ router.post("/snc", async (req, res) =>{
     }
 })
 
-router.post("/snp", async (req, res) => {
+router.post("/snp", subirImgagen(),async (req, res) => {
     if(req.session.inicio == 1){
+        const datos = req.file
         const producto = req.body.producto,
             categoria = req.body.categoria,
             existencia = req.body.existencia,
             precio = req.body.precio,
-            proveedor = req.body.proveedor;
+            proveedor = req.body.proveedor,
+            imagen = datos.filename;
         
-        await nuevoProducto({producto, categoria, existencia, precio, proveedor})
+        await nuevoProducto({producto, categoria, existencia, precio, proveedor, imagen})
 
         res.redirect("/dashboard")
     }else{
